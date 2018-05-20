@@ -2,9 +2,9 @@ require './test/test_helper.rb'
 require './lib/gameboard.rb'
 require './lib/computer_player.rb'
 require './lib/rulesboard.rb'
+require 'pry'
 
 class RulesBoardTest < Minitest::Test
-
   def setup
     @rb = RulesBoard.new
   end
@@ -33,15 +33,34 @@ class RulesBoardTest < Minitest::Test
     assert_equal [expected_1, expected_2], @rb.vertical_and_horizontal_coordinates
   end
 
-  def retrieve_initial_placement_positioning
-    assert_equal 4, @rb.select_path.length
-    assert_instance_of String, @rb.select_coordinate
-    assert_equal 2, @rb.select_coordinate.length
-    assert_equal true, @rb.select_path.include?(@rb.select_coordinate)
+  def test_retrieve_initial_placement_positioning
+    @rb.select_path
+    stand_in_sample = @rb.select_coordinate
+
+    assert_equal 4, @rb.selected_path.length
+    assert_instance_of String, stand_in_sample
+
+    assert_equal 2, stand_in_sample.length
+
+    assert_equal true, @rb.selected_path.include?(stand_in_sample)
+    assert_equal stand_in_sample, @rb.coordinates[0]
   end
 
-  def selects_appropriate_second_coordinate
+  def test_selects_appropriate_second_coordinate
+    skip
+    sample_path = ["A3", "B3", "C3", "D3"]
+    sample_coordinate = "A3"
 
+    assert_equal "B3", @rb.select_second_coordinate(sample_path)
+    assert_equal 2, @rb.coordinates.length
+  end
+
+  def test_verify_index
+    selected_path = ["A3", "B3", "C3", "D3"]
+    sample_coordinate = "A3"
+    @rb.coordinates << sample_coordinate
+
+    assert_equal true, @rb.verify_index(selected_path, "B3")
   end
 
 

@@ -2,10 +2,12 @@ require './lib/computer_player.rb'
 require './lib/player.rb'
 
 class RulesBoard
-  attr_reader   :computer_coordinates
+  attr_reader   :coordinates,
+                :selected_path
 
-  def initialize
-    @computer_coordinates = []
+  def initialize(coordinates = [])
+    @coordinates = coordinates
+    @selected_path = nil
   end
 
   def horizontal_selection
@@ -31,10 +33,31 @@ class RulesBoard
   end
 
   def select_path
-    vertical_and_horizontal_coordinates.sample.sample
+    @selected_path = vertical_and_horizontal_coordinates.sample.sample
   end
 
   def select_coordinate
-    select_path.sample
+    coordinate = @selected_path.sample
+    @coordinates << coordinate
+    coordinate
   end
+
+  def select_second_coordinate(selected_path)
+    second_coordinate = selected_path.sample
+    if @coordinates.exclude?(second_coordinate)
+      check_index(second_coordinate)
+    end
+  end
+
+  def verify_index(selected_path, second_coordinate)
+    taken = @coordinates[0]
+    
+
+  end
+
+
+
+
+
+
 end
