@@ -2,10 +2,10 @@ require './lib/computer_player.rb'
 require './lib/player.rb'
 
 class RulesBoard
-  attr_reader   :coordinate
+  attr_reader   :computer_coordinates
 
-  def initialize(coordinate)
-    @coordinate = coordinate
+  def initialize
+    @computer_coordinates = []
   end
 
   def horizontal_selection
@@ -24,5 +24,17 @@ class RulesBoard
       ["A3", "B3", "C3", "D3"],
       ["A4", "B4", "C4", "D4"],
     ]
-  end 
+  end
+
+  def vertical_and_horizontal_coordinates
+    [horizontal_selection, vertical_selection]
+  end
+
+  def select_path
+    vertical_and_horizontal_coordinates.sample.sample
+  end
+
+  def select_coordinate
+    select_path.sample
+  end
 end

@@ -23,5 +23,4 @@ class PlayerTest < Minitest::Test
       assert_equal " ", coordinate[1]
     end
   end
-
 end
