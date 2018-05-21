@@ -32,7 +32,15 @@ class RulesBoard
     [horizontal_selection, vertical_selection]
   end
 
-  def iterate(selection, coordinates)
+  def find_alignment(default = vertical_and_horizontal_coordinates, coordinates)
+    if coordinates[0][0] == coordinates[1][0]
+      find_row_or_column(horizontal_selection, coordinates)
+    else
+      find_row_or_column(vertical_selection, coordinates)
+    end
+  end
+
+  def find_row_or_column(selection, coordinates)
     selection.each do |array|
       evaluate_simularity(array, coordinates)
     end

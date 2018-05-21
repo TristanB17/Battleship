@@ -97,27 +97,27 @@ class RulesBoardTest < Minitest::Test
   end
 
   def test_minipath_works
+    skip
     @rb.find_mini_path(["A1", "A2"])
 
     assert_equal ["A1", "A2", "A3", "A4"], @rb.selected_path
   end
 
   def test_what_does_just_an_enum_return
+    skip
     @rb.iterate(@rb.horizontal_selection, ["B1", "B2"])
     assert_equal ["B1", "B2", "B3", "B4"], @rb.selected_path
   end
 
-  def test_minitest_works_with_different_coordinates
-    skip
-    @rb.find_mini_path(["B1", "B2"])
-
-    assert_equal ["B1", "B2", "B3", "B4"], @rb.selected_path
+  def test_rulesboard_can_determine_if_user_coordinates_are_vertical_or_horizontal
+    all = @rb.vertical_and_horizontal_coordinates
+    selected = @rb.horizontal_selection
+    group_sort = @rb.find_alignment(["B1", "B2"])
+    assert_equal selected, group_sort
   end
 
-  def test_finds_array_with_common_coordinates
+  def test_rulesboard_can_find_path_from_user_input
     skip
-    @rb.find_path(["A1", "B1"])
 
-    assert_equal ["A1", "B1", "C1", "D1"], @rb.selected_path
   end
 end
