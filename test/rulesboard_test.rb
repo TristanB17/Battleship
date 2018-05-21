@@ -35,33 +35,63 @@ class RulesBoardTest < Minitest::Test
 
   def test_retrieve_initial_placement_positioning
     @rb.select_path
-    stand_in_sample = @rb.select_coordinate
+    sample_coordinate = @rb.select_coordinate.join
 
     assert_equal 4, @rb.selected_path.length
-    assert_instance_of String, stand_in_sample
+    assert_instance_of String, sample_coordinate
+    assert_equal 2, sample_coordinate.length
 
-    assert_equal 2, stand_in_sample.length
-
-    assert_equal true, @rb.selected_path.include?(stand_in_sample)
-    assert_equal stand_in_sample, @rb.coordinates[0]
+    assert_equal true, @rb.selected_path.include?(sample_coordinate)
+    assert_equal sample_coordinate, @rb.coordinates[0]
   end
 
-  def test_selects_appropriate_second_coordinate
-    skip
+  def test_computer_selects_appropriate_second_coordinate
     sample_path = ["A3", "B3", "C3", "D3"]
     sample_coordinate = "A3"
+    @rb.coordinates << sample_coordinate
 
-    assert_equal "B3", @rb.select_second_coordinate(sample_path)
-    assert_equal 2, @rb.coordinates.length
+    # assert_equal true, @rb.select_second_coordinate(sample_path, "B3")
   end
 
   def test_verify_index
     selected_path = ["A3", "B3", "C3", "D3"]
     sample_coordinate = "A3"
+
     @rb.coordinates << sample_coordinate
 
-    assert_equal true, @rb.verify_index(selected_path, "B3")
+    assert_equal ["A3", "B3"], @rb.verify_index(selected_path, "B3")
   end
+
+  def test_can_select_two_appropriate_coordinates
+    sample_path = ["A3", "B3", "C3", "D3"]
+    sample_coordinate = "A3"
+
+    @rb.coordinates << sample_coordinate
+    @rb.select_second_coordinate(sample_path, "B3")
+
+    assert_equal 2, @rb.coordinates.length
+    assert_equal "B3", @rb.coordinates[1]
+  end
+
+  def test_selects_two_appropriate_coordinates_without_input
+    @rb.select_path
+
+    @rb.select_coordinate
+    @rb.select_coordinate
+
+    assert_equal 2, @rb.coordinates.length
+  end
+
+  def test_board_can_make_patrol_boat
+    @rb.construct_patrol_boat
+    ship = @rb.coordinates
+    assert_equal true, ship[0][0] == ship[1][0] || ship[0][1] == ship[1][1]
+    assert_equal 2, @rb.coordinates.length
+  end
+
+
+
+
 
 
 end

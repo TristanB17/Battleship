@@ -38,21 +38,35 @@ class RulesBoard
 
   def select_coordinate
     coordinate = @selected_path.sample
-    @coordinates << coordinate
-    coordinate
+    if @coordinates.length == 1
+      select_second_coordinate(selected_path, coordinate)
+    else
+      @coordinates << coordinate
+    end
   end
 
-  def select_second_coordinate(selected_path)
-    second_coordinate = selected_path.sample
-    if @coordinates.exclude?(second_coordinate)
-      check_index(second_coordinate)
+  def select_second_coordinate(selected_path, second_coordinate)
+    if @coordinates.include?(second_coordinate) == false
+      verify_index(selected_path, second_coordinate)
+    else
+      select_coordinate
     end
   end
 
   def verify_index(selected_path, second_coordinate)
-    taken = @coordinates[0]
-    
+    taken = selected_path.index(@coordinates[0])
+    probe = selected_path.index(second_coordinate)
+    if taken + 1 == probe || taken - 1 == probe
+      @coordinates << second_coordinate
+    else
+      select_coordinate
+    end
+  end
 
+  def construct_patrol_boat
+    select_path
+    select_coordinate
+    select_coordinate
   end
 
 
