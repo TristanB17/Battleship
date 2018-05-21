@@ -96,7 +96,26 @@ class RulesBoardTest < Minitest::Test
     assert_equal true, seaboard == @rb.coordinates
   end
 
+  def test_minipath_works
+    @rb.find_mini_path(["A1", "A2"])
+
+    assert_equal ["A1", "A2", "A3", "A4"], @rb.selected_path
+  end
+
+  def test_what_does_just_an_enum_return
+    @rb.iterate(@rb.horizontal_selection, ["B1", "B2"])
+    assert_equal ["B1", "B2", "B3", "B4"], @rb.selected_path
+  end
+
+  def test_minitest_works_with_different_coordinates
+    skip
+    @rb.find_mini_path(["B1", "B2"])
+
+    assert_equal ["B1", "B2", "B3", "B4"], @rb.selected_path
+  end
+
   def test_finds_array_with_common_coordinates
+    skip
     @rb.find_path(["A1", "B1"])
 
     assert_equal ["A1", "B1", "C1", "D1"], @rb.selected_path

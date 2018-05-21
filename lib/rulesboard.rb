@@ -32,10 +32,20 @@ class RulesBoard
     [horizontal_selection, vertical_selection]
   end
 
-  def find_path(coordinates)
-    vertical_and_horizontal_coordinates.each do |array|
-      array.find do |path|
-        
+  def iterate(selection, coordinates)
+    selection.each do |array|
+      evaluate_simularity(array, coordinates)
+    end
+  end
+
+  def evaluate_simularity(array, coordinates)
+    thing = coordinates.all? do |single|
+      array.include?(single)
+    end
+    if thing == true
+      return @selected_path = array
+    end
+  end
 
   def select_path
     @selected_path = vertical_and_horizontal_coordinates.sample.sample
