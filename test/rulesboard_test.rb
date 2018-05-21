@@ -95,4 +95,10 @@ class RulesBoardTest < Minitest::Test
     seaboard = @rb.coordinates.uniq
     assert_equal true, seaboard == @rb.coordinates
   end
+
+  def test_finds_array_with_common_coordinates
+    @rb.find_path(["A1", "B1"])
+
+    assert_equal ["A1", "B1", "C1", "D1"], @rb.selected_path
+  end
 end
