@@ -45,14 +45,6 @@ class RulesBoardTest < Minitest::Test
     assert_equal sample_coordinate, @rb.coordinates[0]
   end
 
-  def test_computer_selects_appropriate_second_coordinate
-    sample_path = ["A3", "B3", "C3", "D3"]
-    sample_coordinate = "A3"
-    @rb.coordinates << sample_coordinate
-
-    # assert_equal true, @rb.select_second_coordinate(sample_path, "B3")
-  end
-
   def test_verify_index
     selected_path = ["A3", "B3", "C3", "D3"]
     sample_coordinate = "A3"
@@ -85,6 +77,7 @@ class RulesBoardTest < Minitest::Test
   def test_board_can_make_patrol_boat
     @rb.construct_patrol_boat
     ship = @rb.coordinates
+
     assert_equal true, ship[0][0] == ship[1][0] || ship[0][1] == ship[1][1]
     assert_equal 2, @rb.coordinates.length
   end
@@ -95,9 +88,11 @@ class RulesBoardTest < Minitest::Test
     assert_equal 3, @rb.coordinates.length
   end
 
+  def test_destroyer_and_patrol_boat_do_not_occupy_same_spaces
+    @rb.construct_patrol_boat
+    @rb.construct_destroyer
 
-
-
-
-
+    seaboard = @rb.coordinates.uniq
+    assert_equal true, seaboard == @rb.coordinates
+  end
 end

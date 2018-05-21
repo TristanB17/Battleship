@@ -67,7 +67,6 @@ class RulesBoard
   end
 
   def verify_third_index(selected_path, additional_coordinate)
-    binding.pry
     first = selected_path.index(@coordinates[0])
     second = selected_path.index(@coordinates[1])
     probe = selected_path.index(additional_coordinate)
@@ -81,6 +80,7 @@ class RulesBoard
   end
 
   def construct_patrol_boat
+    @coordinates = []
     select_path
     select_coordinate
     select_coordinate
@@ -88,6 +88,7 @@ class RulesBoard
   end
 
   def construct_destroyer
+    @coordinates = []
     select_path
     select_coordinate
     select_coordinate
