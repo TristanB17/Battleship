@@ -1,14 +1,11 @@
-require './lib/game_board.rb'
+require './lib/gameboard.rb'
 
-class Player 
+class Player
   include GameBoard
 
+  attr_reader         :board
 
   def initialize
     @board = generate_board
   end
-
-
-
-
 end
