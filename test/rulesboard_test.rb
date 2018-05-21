@@ -67,7 +67,7 @@ class RulesBoardTest < Minitest::Test
     sample_coordinate = "A3"
 
     @rb.coordinates << sample_coordinate
-    @rb.select_second_coordinate(sample_path, "B3")
+    @rb.select_additional_coordinate(sample_path, "B3")
 
     assert_equal 2, @rb.coordinates.length
     assert_equal "B3", @rb.coordinates[1]
@@ -87,6 +87,12 @@ class RulesBoardTest < Minitest::Test
     ship = @rb.coordinates
     assert_equal true, ship[0][0] == ship[1][0] || ship[0][1] == ship[1][1]
     assert_equal 2, @rb.coordinates.length
+  end
+
+  def test_checks_for_third_coordinate
+    @rb.construct_destroyer
+
+    assert_equal 3, @rb.coordinates.length
   end
 
 

@@ -38,26 +38,43 @@ class RulesBoard
 
   def select_coordinate
     coordinate = @selected_path.sample
-    if @coordinates.length == 1
-      select_second_coordinate(selected_path, coordinate)
+    if @coordinates.length >= 1
+      select_additional_coordinate(selected_path, coordinate)
     else
       @coordinates << coordinate
     end
   end
 
-  def select_second_coordinate(selected_path, second_coordinate)
-    if @coordinates.include?(second_coordinate) == false
-      verify_index(selected_path, second_coordinate)
+  def select_additional_coordinate(selected_path, additional_coordinate)
+    if @coordinates.include?(additional_coordinate) == false
+      verify_index(selected_path, additional_coordinate)
     else
       select_coordinate
     end
   end
 
-  def verify_index(selected_path, second_coordinate)
+  def verify_index(selected_path, additional_coordinate)
+    if @coordinates.length == 2
+      return verify_third_index(selected_path, additional_coordinate)
+    end
     taken = selected_path.index(@coordinates[0])
-    probe = selected_path.index(second_coordinate)
+    probe = selected_path.index(additional_coordinate)
     if taken + 1 == probe || taken - 1 == probe
-      @coordinates << second_coordinate
+      @coordinates << additional_coordinate
+    else
+      select_coordinate
+    end
+  end
+
+  def verify_third_index(selected_path, additional_coordinate)
+    binding.pry
+    first = selected_path.index(@coordinates[0])
+    second = selected_path.index(@coordinates[1])
+    probe = selected_path.index(additional_coordinate)
+    if first > second && (first + 1 == probe || second - 1 == probe)
+      @coordinates << additional_coordinate
+    elsif second > first && (second + 1 == probe || first - 1 == probe)
+      @coordinates << additional_coordinate
     else
       select_coordinate
     end
@@ -67,11 +84,14 @@ class RulesBoard
     select_path
     select_coordinate
     select_coordinate
+    @coordinates
   end
 
-
-
-
-
-
+  def construct_destroyer
+    select_path
+    select_coordinate
+    select_coordinate
+    select_coordinate
+    @coordinates
+  end
 end
