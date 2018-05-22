@@ -42,16 +42,58 @@ class RulesBoard
 
   def find_row_or_column(selection, coordinates)
     selection.each do |array|
-      evaluate_simularity(array, coordinates)
+      evaluate_similarity(array, coordinates)
     end
   end
 
-  def evaluate_simularity(array, coordinates)
+  def evaluate_similarity(array, coordinates)
     thing = coordinates.all? do |single|
       array.include?(single)
     end
     if thing == true
-      return @selected_path = array
+      @coordinates << coordinates[0]
+      @selected_path = array
+      confirm_human_coordinate(@selected_path, coordinates[1..2])
+    end
+  end
+
+  def confirm_human_coordinate(selected_path, additional_coordinates)
+    confirm = additional_coordinates.all? do |additional_coordinate|
+        @coordinates.include?(additional_coordinate)
+    end
+    if confirm == false
+      additional_coordinates.each do |additional_coordinate|
+        verify_human_index(selected_path, additional_coordinate)
+      end
+    else
+      return false
+    end
+  end
+
+  def verify_human_index(selected_path, additional_coordinate)
+    if @coordinates.length == 2
+      return verify_human_third_index(selected_path, additional_coordinate)
+    end
+    taken = selected_path.index(@coordinates[0])
+    probe = selected_path.index(additional_coordinate)
+    if taken + 1 == probe || taken - 1 == probe
+      @coordinates << additional_coordinate
+    else
+      return false
+    end
+  end
+
+  def verify_human_third_index(selected_path, additional_coordinate)
+    ## .min and .max refactor, using first & second in an array
+    first = selected_path.index(@coordinates[0])
+    second = selected_path.index(@coordinates[1])
+    probe = selected_path.index(additional_coordinate)
+    if first > second && (first + 1 == probe || second - 1 == probe)
+      @coordinates << additional_coordinate
+    elsif second > first && (second + 1 == probe || first - 1 == probe)
+      @coordinates << additional_coordinate
+    else
+      return false
     end
   end
 

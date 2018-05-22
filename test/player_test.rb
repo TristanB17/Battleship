@@ -23,4 +23,18 @@ class PlayerTest < Minitest::Test
       assert_equal " ", coordinate[1]
     end
   end
+
+  def test_player_can_create_boats_with_input
+    @player.generate_boats_human(["D2", "D3"], ["D4", "C4", "B4"])
+    clone = @player.coordinates.flatten.uniq
+    assert_equal true, @player.coordinates == clone
+  end
+
+  def test_can_check_coordinate_validity
+    @player.generate_boats_human(["D2", "D3"], ["D4", "C4", "B4"])
+
+    assert_equal true, @player.coordinates_valid?
+  end
+
+
 end

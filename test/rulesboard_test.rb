@@ -96,16 +96,8 @@ class RulesBoardTest < Minitest::Test
     assert_equal true, seaboard == @rb.coordinates
   end
 
-  def test_minipath_works
-    skip
-    @rb.find_mini_path(["A1", "A2"])
-
-    assert_equal ["A1", "A2", "A3", "A4"], @rb.selected_path
-  end
-
   def test_what_does_just_an_enum_return
-    skip
-    @rb.iterate(@rb.horizontal_selection, ["B1", "B2"])
+    @rb.find_row_or_column(@rb.horizontal_selection, ["B1", "B2"])
     assert_equal ["B1", "B2", "B3", "B4"], @rb.selected_path
   end
 
@@ -117,7 +109,24 @@ class RulesBoardTest < Minitest::Test
   end
 
   def test_rulesboard_can_find_path_from_user_input
-    skip
+    coordinates = ["B4", "C4"]
+    @rb.find_alignment(coordinates)
+    assert_equal ["A4", "B4", "C4", "D4"], @rb.selected_path
+  end
 
+  def test_rulesboard_finds_path_and_verifies_user_input_correct
+    coordinates = ["D3", "D4"]
+    @rb.find_alignment(coordinates)
+
+    assert_equal ["D1", "D2", "D3", "D4"], @rb.selected_path
+    assert_equal ["D3", "D4"], @rb.coordinates
+  end
+
+  def test_rulesboard_finds_path_and_verifies_user_input_correct_with_three_spaces
+    coordinates = ["D3", "D4", "D2"]
+    @rb.find_alignment(coordinates)
+
+    assert_equal ["D1", "D2", "D3", "D4"], @rb.selected_path
+    assert_equal ["D3", "D4", "D2"], @rb.coordinates
   end
 end
