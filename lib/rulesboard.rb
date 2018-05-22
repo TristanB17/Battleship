@@ -32,6 +32,18 @@ class RulesBoard
     [horizontal_selection, vertical_selection]
   end
 
+  def receive_and_filter_input(input)
+    coordinate_bank = vertical_selection.flatten.flatten
+    coordinate_check = input.all? do |coordinate|
+      coordinate_bank.include?(coordinate)
+    end
+    if coordinate_check == true
+      find_alignment(input)
+    else
+      return @coordinates
+    end
+  end
+
   def find_alignment(default = vertical_and_horizontal_coordinates, coordinates)
     if coordinates[0][0] == coordinates[1][0]
       find_row_or_column(horizontal_selection, coordinates)
@@ -66,7 +78,7 @@ class RulesBoard
         verify_human_index(selected_path, additional_coordinate)
       end
     else
-      return false
+      return @coordinates
     end
   end
 
@@ -79,7 +91,7 @@ class RulesBoard
     if taken + 1 == probe || taken - 1 == probe
       @coordinates << additional_coordinate
     else
-      return false
+      return @coordinates
     end
   end
 
@@ -93,7 +105,7 @@ class RulesBoard
     elsif second > first && (second + 1 == probe || first - 1 == probe)
       @coordinates << additional_coordinate
     else
-      return false
+      return @coordinates
     end
   end
 

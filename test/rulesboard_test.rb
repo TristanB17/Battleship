@@ -129,4 +129,26 @@ class RulesBoardTest < Minitest::Test
     assert_equal ["D1", "D2", "D3", "D4"], @rb.selected_path
     assert_equal ["D3", "D4", "D2"], @rb.coordinates
   end
+
+  def test_rules_board_can_filter_valid_input
+    coordinates = ["D3", "D4", "D2"]
+
+    @rb.recieve_and_filter_input(coordinates)
+    assert_equal 3, @rb.coordinates.count
+    assert_equal coordinates, @rb.coordinates
+  end
+
+  def test_rules_board_can_filter_valid_input
+    coordinates = ["D3", "D4", "D9"]
+
+    @rb.receive_and_filter_input(coordinates)
+    assert_equal [], @rb.coordinates
+  end
+
+  def test_rules_board_can_filter_nonsensical_input
+    coordinates = ["4", "D4", 9]
+
+    @rb.receive_and_filter_input(coordinates)
+    assert_equal [], @rb.coordinates
+  end
 end
