@@ -13,6 +13,7 @@ class Player
   end
 
   def generate_boats_human(pb_coordinates, destroyer_coordinates)
+    binding.pry
     patrol_boat = RulesBoard.new
     patrol_boat.receive_and_filter_input(pb_coordinates)
     ship_1_coordinates = patrol_boat.coordinates
