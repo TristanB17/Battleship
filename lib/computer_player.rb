@@ -5,11 +5,13 @@ class ComputerPlayer
   include GameBoard
 
   attr_reader         :board,
-                      :coordinates
+                      :coordinates,
+                      :shots_fired
 
   def initialize
     @board = generate_board
     @coordinates = []
+    @shots_fired = []
   end
 
   def generate_boats
@@ -30,7 +32,6 @@ class ComputerPlayer
   def set_coordinates
     @coordinates = @coordinates.each do |coordinate|
       @board[coordinate][0] = true
-      @board[coordinate][1] = " "
     end
     @board
   end
@@ -51,5 +52,32 @@ class ComputerPlayer
     '================='
   ]
   board.join("\n")
+  end
+
+  def take_fire(missile)
+    if @board[missile][0] == true
+      @board[missile][0] = false
+      @board[missile][1] = "H"
+    else
+      @board[missile][1] = "M"
+    end
+  end
+
+  def select_random_coordinate
+    random_coordinate = @board.keys.sample
+    computer_shots_fired(random_coordinate)
+    random_coordinate
+  end
+
+  def computer_shots_fired(random_coordinate)
+    if @shots_fired.include?(random_coordinate) == false
+      @shots_fired << random_coordinate
+    else
+      select_random_coordinate
+    end
+  end
+
+  def fire_on_player
+    @shots_fired.last
   end
 end

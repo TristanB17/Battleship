@@ -24,4 +24,6 @@ class GameFlowTest < Minitest::Test
     assert_equal " ", @gameflow.computer_player.board.values[0][1]
     assert_equal " ", @gameflow.player.board.values[0][1]
   end
+
+
 end

@@ -59,8 +59,18 @@ class Player
     "C #{@board["C1"][1]} #{@board["C2"][1]} #{@board["C3"][1]} #{@board["C4"][1]}",
 
     "D #{@board["D1"][1]} #{@board["D2"][1]} #{@board["D3"][1]} #{@board["D4"][1]}",
+
     '================='
   ]
   board.join("\n")
+  end
+
+  def take_fire(missile)
+    if @board[missile][0] == true
+      @board[missile][0] = false
+      @board[missile][1] = "H"
+    else
+      @board[missile][1] = "M"
+    end
   end
 end

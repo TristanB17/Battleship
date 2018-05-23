@@ -49,14 +49,49 @@ class ComputerPlayerTest < Minitest::Test
   end
 
   def test_computer_has_board_display
-    assert_equal "=================
-+Computer Player
-+=================
-+. 1 2 3 4
-+A
-+B
-+C
-+D
-+=================", @cp.display_board
+    skip
+        assert_equal "=================
+    Computer Player
+    =================
+    . 1 2 3 4
+    A
+    B
+    C
+    D
+    =================", @cp.display_board
+  end
+
+  def test_player_board_can_take_fire
+    skip
+    @cp.generate_boats
+
+    @cp.set_coordinates
+    # @cp.take_fire("D3")
+
+    # assert_equal false, @cp.board["D3"][0]
+    # assert_equal "H", @cp.board["D3"][1]
+
+    # @cp.take_fire("A1")
+    # puts @cp.display_board
+
+    # assert_equal "M", @cp.board["A1"][1]
+  end
+
+  def test_coordinates_fired_returns_empty_array
+    assert_equal [], @cp.shots_fired
+  end
+
+  def test_select_random_coordinate_returns_valid_string
+    assert_instance_of String, @cp.select_random_coordinate
+    assert_equal 1, @cp.shots_fired.count
+  end
+
+  def test_computer_can_fire_multiple_shots
+    @cp.select_random_coordinate
+    @cp.select_random_coordinate
+    @cp.select_random_coordinate
+
+    assert_equal 3, @cp.shots_fired.count
+    assert_equal @cp.shots_fired[-1], @cp.fire_on_player
   end
 end
