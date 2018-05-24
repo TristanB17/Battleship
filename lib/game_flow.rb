@@ -92,12 +92,12 @@ class GameFlow
       puts "Please enter firing position"
       commence = @player.input_attack_coordinates
       if commence == nil
-        puts "Invalid input"
         get_new_coordinates
       end
       @computer_player.take_fire(@player.fire!)
       puts @computer_player.display_board
       puts "Now it's my turn..."
+      sleep(2)
       @computer_player.select_random_coordinate
       player.take_fire(@computer_player.fire_on_player)
       puts @player.display_board
@@ -114,9 +114,5 @@ class GameFlow
     defeated = @computer_player.coordinates.all? do |coordinate|
       @computer_player.board[coordinate][0] == false
     end
-  end
-
-  def repeat_fire
-    exchange_fire_sequence
   end
 end
