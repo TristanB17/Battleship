@@ -96,28 +96,59 @@ class RulesBoardTest < Minitest::Test
     assert_equal true, seaboard == @rb.coordinates
   end
 
-  def test_minipath_works
-    @rb.find_mini_path(["A1", "A2"])
-
-    assert_equal ["A1", "A2", "A3", "A4"], @rb.selected_path
-  end
-
   def test_what_does_just_an_enum_return
-    @rb.iterate(@rb.horizontal_selection, ["B1", "B2"])
+    @rb.find_row_or_column(@rb.horizontal_selection, ["B1", "B2"])
     assert_equal ["B1", "B2", "B3", "B4"], @rb.selected_path
   end
 
-  def test_minitest_works_with_different_coordinates
-    skip
-    @rb.find_mini_path(["B1", "B2"])
-
-    assert_equal ["B1", "B2", "B3", "B4"], @rb.selected_path
+  def test_rulesboard_can_determine_if_user_coordinates_are_vertical_or_horizontal
+    all = @rb.vertical_and_horizontal_coordinates
+    selected = @rb.horizontal_selection
+    group_sort = @rb.find_alignment(["B1", "B2"])
+    assert_equal selected, group_sort
   end
 
-  def test_finds_array_with_common_coordinates
-    skip
-    @rb.find_path(["A1", "B1"])
+  def test_rulesboard_can_find_path_from_user_input
+    coordinates = ["B4", "C4"]
+    @rb.find_alignment(coordinates)
+    assert_equal ["A4", "B4", "C4", "D4"], @rb.selected_path
+  end
 
-    assert_equal ["A1", "B1", "C1", "D1"], @rb.selected_path
+  def test_rulesboard_finds_path_and_verifies_user_input_correct
+    coordinates = ["D3", "D4"]
+    @rb.find_alignment(coordinates)
+
+    assert_equal ["D1", "D2", "D3", "D4"], @rb.selected_path
+    assert_equal ["D3", "D4"], @rb.coordinates
+  end
+
+  def test_rulesboard_finds_path_and_verifies_user_input_correct_with_three_spaces
+    coordinates = ["D3", "D4", "D2"]
+    @rb.find_alignment(coordinates)
+
+    assert_equal ["D1", "D2", "D3", "D4"], @rb.selected_path
+    assert_equal ["D3", "D4", "D2"], @rb.coordinates
+  end
+
+  def test_rules_board_can_filter_valid_input
+    coordinates = ["D3", "D4", "D2"]
+
+    @rb.recieve_and_filter_input(coordinates)
+    assert_equal 3, @rb.coordinates.count
+    assert_equal coordinates, @rb.coordinates
+  end
+
+  def test_rules_board_can_filter_valid_input
+    coordinates = ["D3", "D4", "D9"]
+
+    @rb.receive_and_filter_input(coordinates)
+    assert_equal [], @rb.coordinates
+  end
+
+  def test_rules_board_can_filter_nonsensical_input
+    coordinates = ["4", "D4", 9]
+
+    @rb.receive_and_filter_input(coordinates)
+    assert_equal [], @rb.coordinates
   end
 end
