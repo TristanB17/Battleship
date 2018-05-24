@@ -144,7 +144,6 @@ class RulesBoard
   end
 
   def verify_third_index(selected_path, additional_coordinate)
-    ## .min and .max refactor, using first & second in an array
     first = selected_path.index(@coordinates[0])
     second = selected_path.index(@coordinates[1])
     probe = selected_path.index(additional_coordinate)
@@ -173,6 +172,4 @@ class RulesBoard
     select_coordinate
     @coordinates
   end
-
-
 end

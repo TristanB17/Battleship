@@ -1,8 +1,6 @@
 require './lib/gameboard.rb'
 require './lib/rulesboard.rb'
 require './lib/game_flow.rb'
-require './lib/computer_player.rb'
-
 
 class Player
   include GameBoard
@@ -46,7 +44,7 @@ class Player
     if verified == true
       set_coordinates
     else
-      puts "Invalid input"
+      "Invalid input"
     end
   end
 

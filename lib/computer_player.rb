@@ -1,7 +1,6 @@
 require './lib/gameboard.rb'
 require './lib/rulesboard.rb'
 require './lib/game_flow.rb'
-require './lib/player.rb'
 
 class ComputerPlayer
   include GameBoard

@@ -17,24 +17,6 @@ class GameFlow
     @player_destroyer = []
   end
 
-  def main_menu
-    welcome
-    input = gets.chomp
-    until input == 'q' || input == 'p'
-      loop do
-        if input == 'p'
-          ship_setting_sequence
-        elsif input == 'i'
-          instructions
-        elsif input == 'q'
-          exit
-        else
-          puts "Invalid input, please try again"
-        end
-      end
-    end
-  end
-
   def computer_deploy_fleet
     @computer_player.generate_boats
     @computer_player.set_coordinates
@@ -74,19 +56,6 @@ class GameFlow
     end
   end
 
-  # def filter_input_2(input)
-  #   sort_ships_2(input)
-  #   puts "I made it to filter_input_2"
-  #   # if input.class == String
-  #   # elsif input.length != 5 || input.length != 8
-  #   #   return incorrect_input
-  #   # else input[2] != " "
-  #   #   return incorrect_input
-  #   # end
-  #   # puts "I made it to the end of input 2"
-  # end
-
-
   def sort_ships(input)
     if input.size == 2
       @player_patrol_boat = input
@@ -100,8 +69,8 @@ class GameFlow
   def player_deploy_fleet
     @player.generate_boats_human(@player_patrol_boat, @player_destroyer)
     puts "fleet deployed"
+    puts @computer_player.display_board
     puts @player.display_board
-    puts "I did the thing"
   end
 
   def ship_setting_sequence
@@ -109,8 +78,6 @@ class GameFlow
     get_player_patrol_boat_location
     get_player_destroyer_location
     player_deploy_fleet
-    puts @computer_player.display_board
-    puts @player.display_board
     exchange_fire_sequence
   end
 
@@ -148,3 +115,8 @@ class GameFlow
       @computer_player.board[coordinate][0] == false
     end
   end
+
+  def repeat_fire
+    exchange_fire_sequence
+  end
+end

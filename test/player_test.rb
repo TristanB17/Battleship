@@ -26,7 +26,7 @@ class PlayerTest < Minitest::Test
   def test_rejects_bad_coordinates
     @player.generate_boats_human(["D4", "D3"], ["D4", "C4", "B4"])
 
-    assert_equal false, @player.coordinates_valid?
+    assert_equal "Invalid input", @player.validate_coordinates
   end
 
   def test_player_can_create_boats_with_good_coordinates
@@ -88,11 +88,5 @@ class PlayerTest < Minitest::Test
     @player.take_fire("A1")
 
     assert_equal "M", @player.board["A1"][1]
-  end
-
-  def test_i_am_god
-    bedeeee = Player.new
-    bedeeee.coordinates
-    @player.coordinates = ["A4", "A9", "A3", "A1", "A5"]
   end
 end

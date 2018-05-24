@@ -1,5 +1,4 @@
-require './lib/game_flow.rb'
+require './lib/main_menu.rb'
 
-new_game = GameFlow.new
-new_game.main_menu
-new_game.repeat_fire
+menu = Menu.new
+menu.start

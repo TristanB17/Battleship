@@ -45,4 +45,8 @@ module Printer
     puts "and then just ignore it and fire again at another completely random coordinate..."
     puts "Anyway, would you like to (p)lay again? or (q)uit?"
   end
+
+  def exit_text
+    puts "Another time, then. Loser."
+  end 
 end

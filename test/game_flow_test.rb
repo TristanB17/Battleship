@@ -39,9 +39,4 @@ class GameFlowTest < Minitest::Test
     @gameflow.filter_input_1("A3 B3 C3")
     @gameflow.player_deploy_fleet
   end
-
-  def test_goofin
-    @gameflow.ship_setting_sequence
-    @gameflow.exchange_fire_sequence
-  end
 end
