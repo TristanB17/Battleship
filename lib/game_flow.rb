@@ -1,7 +1,10 @@
 require './lib/computer_player.rb'
 require './lib/player.rb'
+require './lib/printer.rb'
 
 class GameFlow
+  include Printer
+
   attr_reader   :computer_player,
                 :player,
                 :player_patrol_boat,
@@ -12,6 +15,24 @@ class GameFlow
     @player = Player.new
     @player_patrol_boat = []
     @player_destroyer = []
+  end
+
+  def main_menu
+    welcome
+    input = gets.chomp
+    until input == 'q' || input == 'p'
+      loop do
+        if input == 'p'
+          ship_setting_sequence
+        elsif input == 'i'
+          instructions
+        elsif input == 'q'
+          exit
+        else
+          puts "Invalid input, please try again"
+        end
+      end
+    end
   end
 
   def computer_deploy_fleet
@@ -90,6 +111,7 @@ class GameFlow
     player_deploy_fleet
     puts @computer_player.display_board
     puts @player.display_board
+    exchange_fire_sequence
   end
 
   def get_new_coordinates
@@ -126,8 +148,3 @@ class GameFlow
       @computer_player.board[coordinate][0] == false
     end
   end
-
-  def repeat_fire
-    exchange_fire_sequence
-  end
-end

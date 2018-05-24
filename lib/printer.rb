@@ -11,7 +11,7 @@ module Printer
     puts"One ship is two coordinates in length, and the other is three."
     puts "After all ships are placed, you and the computer will take turns guessing the location of each other's ships via their position on the grid."
     puts "The game ends when either you or the computer's ships have all been sunk."
-    puts "Good luck!"
+    puts "Please press (p) or (q) to play. Good luck!"
   end
 
   def place_ship_instructions
