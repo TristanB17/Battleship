@@ -48,19 +48,6 @@ class ComputerPlayerTest < Minitest::Test
     assert_equal " ", @cp.board["B4"][1]
   end
 
-  def test_computer_has_board_display
-    skip
-        assert_equal "=================
-    Computer Player
-    =================
-    . 1 2 3 4
-    A
-    B
-    C
-    D
-    =================", @cp.display_board
-  end
-
   def test_coordinates_fired_returns_empty_array
     assert_equal [], @cp.shots_fired
   end

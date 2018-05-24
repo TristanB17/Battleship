@@ -54,28 +54,6 @@ class PlayerTest < Minitest::Test
     assert_equal "S", @player.board["B4"][1]
   end
 
-  def test_player_has_board_display
-    skip
-    assert_equal "=================
-    Player
-    =================
-    . 1 2 3 4
-    A
-    B
-    C
-    D
-    =================", @player.display_board
-  end
-
-  def test_player_board_updated_after_coordinates_set
-    skip
-    @player.generate_boats_human(["D2", "D3"], ["D4", "C4", "B4"])
-
-    @player.set_coordinates
-
-    assert_equal "\n=================\nPlayer\n=================\n. 1 2 3 4\nA    \nB    \nC    \nD    \n=================", @player.display_board
-  end
-
   def test_player_board_can_take_fire
     @player.generate_boats_human(["D2", "D3"], ["D4", "C4", "B4"])
 

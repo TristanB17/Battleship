@@ -25,18 +25,4 @@ class GameFlowTest < Minitest::Test
     assert_equal " ", @gameflow.computer_player.board.values[0][1]
     assert_equal " ", @gameflow.player.board.values[0][1]
   end
-
-  def test_player_coordinates_can_be_verified
-    skip
-    @gameflow.filter_input_1("A1 A2")
-    @gameflow.filter_input_1("A3 B3 C3")
-    @gameflow.player_deploy_fleet
-  end
-
-  def test_player_coordinates_can_be_rejected
-    skip
-    @gameflow.filter_input_1("A1 A6")
-    @gameflow.filter_input_1("A3 B3 C3")
-    @gameflow.player_deploy_fleet
-  end
 end

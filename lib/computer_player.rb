@@ -16,14 +16,14 @@ class ComputerPlayer
   end
 
   def generate_boats
-    pb = RulesBoard.new.construct_patrol_boat
+    patrol_boat = RulesBoard.new.construct_patrol_boat
     destroy = RulesBoard.new.construct_destroyer
-    verify_spaces_occupied(pb, destroy)
+    verify_spaces_occupied(patrol_boat, destroy)
   end
 
-  def verify_spaces_occupied(pb, destroyer)
-    if destroyer.include?(pb[0]) == false && destroyer.include?(pb[1]) == false
-      @coordinates.push(pb, destroyer)
+  def verify_spaces_occupied(patrol_boat, destroyer)
+    if destroyer.include?(patrol_boat[0]) == false && destroyer.include?(patrol_boat[1]) == false
+      @coordinates.push(patrol_boat, destroyer)
     else
       generate_boats
     end
@@ -38,7 +38,6 @@ class ComputerPlayer
 
   def set_individual_coordinate(coordinate)
     if @board[coordinate][1] = ' '
-      @board[coordinate][1] = ' '
       @board[coordinate][0] = true
     end
   end
