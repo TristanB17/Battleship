@@ -99,6 +99,7 @@ class GameFlow
   def exchange_fire_sequence
     loop do
       break if computer_player_defeated?
+      break if player_defeated?
       puts "Please enter firing position"
       commence = @player.input_attack_coordinates
       if commence == nil
@@ -107,18 +108,10 @@ class GameFlow
       end
       @computer_player.take_fire(@player.fire!)
       puts @computer_player.display_board
-      break if player_defeated?
       puts "Now it's my turn..."
-      sleep(2)
       @computer_player.select_random_coordinate
       player.take_fire(@computer_player.fire_on_player)
       puts @player.display_board
-      # if player_defeated? == true
-      #   break
-      # end
-      # if computer_player_defeated? == true
-      #   break
-      # end
     end
   end
 
