@@ -27,57 +27,114 @@ class GameFlow
 
   def get_player_patrol_boat_location
     puts "Gimme a patrol boat"
-    gets.chomp
+    input = gets.chomp
+    filter_input_1(input)
   end
 
   def get_player_destroyer_location
-    "Gimme a destroyer"
-    gets.chomp
+    puts "Gimme a destroyer"
+    input = gets.chomp
+    filter_input_1(input)
   end
 
   def incorrect_input
     puts "That's wrong"
-    receive_human_input
+    get_player_patrol_boat_location
   end
 
-  def filter_input
-    input = get_player_patrol_boat_location
-    if input.class == String && input.length == 5
-      sort_ships(input)
-    elsif input.class == String && input.length == 5
-      sort_ships(input)
-    elsif input.length != 5 || input.length != 8
-      return incorrect_input
-    else input[2] != " "
-      return incorrect_input
+  def filter_input_1(input)
+    verified = input.to_s.split(" ").all? do |coordinate|
+      @player.board.keys.include?(coordinate)
     end
-  end
-
-  def sort_ships(input)
-    if input.length == 5
-      @player_patrol_boat = input.split
-    else
-      input.length == 8
-      @player_destroyer = input.split
-    end
-  end
-
-  def player_deploy_fleet
-    if @player_patrol_boat != nil && @player_destroyer != nil
-      @player.generate_boats_human(@player_patrol_boat, @player_destroyer)
+    if verified == true
+      sort_ships(input.split(" "))
     else
       incorrect_input
     end
   end
 
-  def verify_second_filter
-    if @player.coordinates_valid? == true
-      @player.set_coordinates
+  # def filter_input_2(input)
+  #   sort_ships_2(input)
+  #   puts "I made it to filter_input_2"
+  #   # if input.class == String
+  #   # elsif input.length != 5 || input.length != 8
+  #   #   return incorrect_input
+  #   # else input[2] != " "
+  #   #   return incorrect_input
+  #   # end
+  #   # puts "I made it to the end of input 2"
+  # end
+
+
+  def sort_ships(input)
+    if input.size == 2
+      @player_patrol_boat = input
+    elsif input.size == 3
+      @player_destroyer = input
+    else
+      incorrect_input
     end
+  end
+
+  def player_deploy_fleet
+    @player.generate_boats_human(@player_patrol_boat, @player_destroyer)
+    puts "fleet deployed"
+    puts @player.display_board
+    puts "I did the thing"
   end
 
   def ship_setting_sequence
     computer_deploy_fleet
-    @computer_player.display_board
+    get_player_patrol_boat_location
+    get_player_destroyer_location
+    player_deploy_fleet
+    puts @computer_player.display_board
+    puts @player.display_board
+  end
+
+  def get_new_coordinates
+    exchange_fire_sequence
+  end
+
+  def exchange_fire_sequence
+    loop do
+      break if computer_player_defeated?
+      puts "Please enter firing position"
+      commence = @player.input_attack_coordinates
+      if commence == nil
+        puts "Invalid input"
+        get_new_coordinates
+      end
+      @computer_player.take_fire(@player.fire!)
+      puts @computer_player.display_board
+      break if player_defeated?
+      puts "Now it's my turn..."
+      sleep(2)
+      @computer_player.select_random_coordinate
+      player.take_fire(@computer_player.fire_on_player)
+      puts @player.display_board
+      # if player_defeated? == true
+      #   break
+      # end
+      # if computer_player_defeated? == true
+      #   break
+      # end
+    end
+  end
+
+  def player_defeated?
+    defeated = @player.coordinates.all? do |coordinate|
+      @player.board[coordinate][0] == false
+    end
+  end
+
+  def computer_player_defeated?
+    defeated = @computer_player.coordinates.all? do |coordinate|
+      @computer_player.board[coordinate][0] == false
+    end
+  end
+
+  def repeat_fire
+    exchange_fire_sequence
   end
 end

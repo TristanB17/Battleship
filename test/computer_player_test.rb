@@ -61,22 +61,6 @@ class ComputerPlayerTest < Minitest::Test
     =================", @cp.display_board
   end
 
-  def test_player_board_can_take_fire
-    skip
-    @cp.generate_boats
-
-    @cp.set_coordinates
-    # @cp.take_fire("D3")
-
-    # assert_equal false, @cp.board["D3"][0]
-    # assert_equal "H", @cp.board["D3"][1]
-
-    # @cp.take_fire("A1")
-    # puts @cp.display_board
-
-    # assert_equal "M", @cp.board["A1"][1]
-  end
-
   def test_coordinates_fired_returns_empty_array
     assert_equal [], @cp.shots_fired
   end
@@ -93,5 +77,17 @@ class ComputerPlayerTest < Minitest::Test
 
     assert_equal 3, @cp.shots_fired.count
     assert_equal @cp.shots_fired[-1], @cp.fire_on_player
+  end
+
+  def test_computer_can_take_fire
+    @cp.verify_spaces_occupied(["D2", "D3"], ["D4", "C4", "B4"])
+
+    @cp.set_coordinates
+    coordinate = "A1"
+
+    @cp.take_fire(coordinate)
+
+    assert_equal false, @cp.board[coordinate][0]
+    assert_equal "M", @cp.board[coordinate][1]
   end
 end

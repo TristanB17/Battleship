@@ -1,19 +1,23 @@
 require './lib/gameboard.rb'
 require './lib/rulesboard.rb'
+require './lib/game_flow.rb'
+require './lib/computer_player.rb'
+
 
 class Player
   include GameBoard
 
   attr_reader         :board,
-                      :coordinates
+                      :coordinates,
+                      :shots_fired
 
   def initialize
     @coordinates = []
     @board = generate_board
+    @shots_fired = []
   end
 
   def generate_boats_human(pb_coordinates, destroyer_coordinates)
-    binding.pry
     patrol_boat = RulesBoard.new
     patrol_boat.receive_and_filter_input(pb_coordinates)
     ship_1_coordinates = patrol_boat.coordinates
@@ -25,27 +29,25 @@ class Player
 
   def verify_spaces_occupied(pb, destroy)
     if destroy.include?(pb[0]) == false && destroy.include?(pb[1]) == false
+      puts "in verify_spaces_occupied"
       @coordinates.push(pb, destroy)
       @coordinates = @coordinates.flatten
+      validate_coordinates
+      puts "Did the thing"
     else
-      return @coordinates = []
+      puts "Invalid input"
     end
   end
 
-  def coordinates_valid?
-    if @coordinates != false && @coordinates.count == 5
-      return true
+  def validate_coordinates
+    verified = @coordinates.all? do |coordinate|
+      @board.keys.include?(coordinate)
+    end
+    if verified == true
+      set_coordinates
     else
-      return false
+      puts "Invalid input"
     end
-  end
-
-  def set_coordinates
-    @coordinates = @coordinates.each do |coordinate|
-      @board[coordinate][0] = true
-      @board[coordinate][1] = "S"
-    end
-    @board
   end
 
   def display_board
@@ -63,7 +65,24 @@ class Player
 
     '================='
   ]
-  board.join("\n")
+    board.join("\n")
+  end
+
+  def set_coordinates
+    @coordinates.each do |coordinate|
+      set_individual_coordinate(coordinate)
+    end
+  end
+
+  def set_individual_coordinate(coordinate)
+    if @board[coordinate][1] = " "
+      @board[coordinate][1] = "S"
+      @board[coordinate][0] = true
+    end
+  end
+
+  def board_stays_after_update
+    display_board
   end
 
   def take_fire(missile)
@@ -73,5 +92,18 @@ class Player
     else
       @board[missile][1] = "M"
     end
+  end
+
+  def input_attack_coordinates
+    coordinate = gets.chomp
+    if @board.keys.include?(coordinate) == true && @shots_fired.include?(coordinate) == false
+      @shots_fired << coordinate
+    else
+      puts "Invalid input"
+    end
+  end
+
+  def fire!
+    @shots_fired.last
   end
 end

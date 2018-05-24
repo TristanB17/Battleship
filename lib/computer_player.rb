@@ -1,5 +1,7 @@
 require './lib/gameboard.rb'
 require './lib/rulesboard.rb'
+require './lib/game_flow.rb'
+require './lib/player.rb'
 
 class ComputerPlayer
   include GameBoard
@@ -20,9 +22,9 @@ class ComputerPlayer
     verify_spaces_occupied(pb, destroy)
   end
 
-  def verify_spaces_occupied(pb, destroy)
-    if destroy.include?(pb[0]) == false && destroy.include?(pb[1]) == false
-      @coordinates.push(pb, destroy)
+  def verify_spaces_occupied(pb, destroyer)
+    if destroyer.include?(pb[0]) == false && destroyer.include?(pb[1]) == false
+      @coordinates.push(pb, destroyer)
     else
       generate_boats
     end
@@ -30,10 +32,16 @@ class ComputerPlayer
   end
 
   def set_coordinates
-    @coordinates = @coordinates.each do |coordinate|
+    @coordinates.each do |coordinate|
+      set_individual_coordinate(coordinate)
+    end
+  end
+
+  def set_individual_coordinate(coordinate)
+    if @board[coordinate][1] = " "
+      @board[coordinate][1] = "S"
       @board[coordinate][0] = true
     end
-    @board
   end
 
   def display_board
