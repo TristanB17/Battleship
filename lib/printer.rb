@@ -1,11 +1,13 @@
 module Printer
 
   def welcome
+    puts "\e[H\e[2J"
     puts "Hello and welcome to battleship!"
     puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
   end
 
   def instructions
+    puts "\e[H\e[2J"
     puts "You are playing against a computer that is attempting to sink your ships."
     puts "You and the computer will both place your ships on the game board, which has sixteen coordinates."
     puts"One ship is two coordinates in length, and the other is three."
@@ -20,10 +22,10 @@ module Printer
     puts "The first is two units long and the"
     puts "second is three units long."
     puts "The grid has A1 at the top left and D4 at the bottom right."
-    puts "The ships are placed with a capital letter and a number"
+    puts "The ships are placed with a capital letter and a number (for example: A1)"
     puts "that can be found on the grid with a space in between them."
 
-    puts "Enter the squares for the two-unit ship (ie A1 A2)"
+    puts "Enter the squares for the two-unit ship (for example: A1 A2)"
   end
 
   def place_destroyer_instructions
@@ -31,7 +33,7 @@ module Printer
     puts "The format is the same as the input for the two unit ship,"
     puts "you need only add one more space as well as a letter/number combination"
 
-    puts "Enter the squares for the three-unit ship (ie A1 A2 A3)"
+    puts "Enter the squares for the three-unit ship (for example: A1 A2 A3)"
   end
 
   def victory
@@ -43,10 +45,11 @@ module Printer
     puts "Congratulations on your- oh wait... you lost... against an AI that just guesses random coordinates..."
     puts "as in, completely random... like, it could hit one of your ships,"
     puts "and then just ignore it and fire again at another completely random coordinate..."
-    puts "Anyway, would you like to (p)lay again? or (q)uit?"
+    puts "anyway, would you like to (p)lay again? or (q)uit?"
   end
 
   def exit_text
+    puts "\e[H\e[2J"
     puts "Another time, then. Loser."
-  end 
+  end
 end

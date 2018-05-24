@@ -29,23 +29,23 @@ class GameFlow
   end
 
   def get_player_patrol_boat_location
-    puts "Gimme a patrol boat"
+    place_ship_instructions
     input = gets.chomp
-    filter_input_1(input)
+    filter_input(input)
   end
 
   def get_player_destroyer_location
-    puts "Gimme a destroyer"
+    place_destroyer_instructions
     input = gets.chomp
-    filter_input_1(input)
+    filter_input(input)
   end
 
   def incorrect_input
-    puts "That's wrong"
+    puts "Invalid input. Please enter existing coordinates."
     get_player_patrol_boat_location
   end
 
-  def filter_input_1(input)
+  def filter_input(input)
     verified = input.to_s.split(" ").all? do |coordinate|
       @player.board.keys.include?(coordinate)
     end

@@ -31,6 +31,7 @@ class Player
       @coordinates.push(pb, destroy)
       @coordinates = @coordinates.flatten
       validate_coordinates
+      puts "Did the thing"
     else
       puts "Invalid input"
     end
@@ -43,14 +44,14 @@ class Player
     if verified == true
       set_coordinates
     else
-      "Invalid input."
+      "Invalid input"
     end
   end
 
   def display_board
     board = ['=================',
-    'Player',
-    '=================',
+      'Player',
+     '=================',
      ". 1 2 3 4",
     "A #{@board["A1"][1]} #{@board["A2"][1]} #{@board["A3"][1]} #{@board["A4"][1]}",
 
@@ -61,8 +62,8 @@ class Player
     "D #{@board["D1"][1]} #{@board["D2"][1]} #{@board["D3"][1]} #{@board["D4"][1]}",
 
     '================='
-    ]
-    board.join('\n')
+  ]
+    board.join("\n")
   end
 
   def set_coordinates
@@ -85,9 +86,9 @@ class Player
   def take_fire(missile)
     if @board[missile][0] == true
       @board[missile][0] = false
-      @board[missile][1] = "H"
+      @board[missile][1] = 'H'
     else
-      @board[missile][1] = "M"
+      @board[missile][1] = 'M'
     end
   end
 
