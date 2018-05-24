@@ -44,7 +44,7 @@ class Player
     if verified == true
       set_coordinates
     else
-      "Invalid input"
+      "Invalid input."
     end
   end
 

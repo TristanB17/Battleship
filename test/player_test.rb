@@ -20,13 +20,13 @@ class PlayerTest < Minitest::Test
   def test_asserts_good_coordinates
     @player.generate_boats_human(["D2", "D3"], ["D4", "C4", "B4"])
 
-    assert_equal true, @player.coordinates_valid?
+    assert_equal ["D2", "D3", "D4", "C4", "B4"], @player.validate_coordinates
   end
 
   def test_rejects_bad_coordinates
     @player.generate_boats_human(["D4", "D3"], ["D4", "C4", "B4"])
 
-    assert_equal "Invalid input", @player.validate_coordinates
+    assert_equal [], @player.validate_coordinates
   end
 
   def test_player_can_create_boats_with_good_coordinates

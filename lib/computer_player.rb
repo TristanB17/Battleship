@@ -37,18 +37,18 @@ class ComputerPlayer
   end
 
   def set_individual_coordinate(coordinate)
-    if @board[coordinate][1] = " "
-      @board[coordinate][1] = "S"
+    if @board[coordinate][1] = ' '
+      @board[coordinate][1] = ' '
       @board[coordinate][0] = true
     end
   end
 
   def display_board
     board = [
-     '=================',
-      'Computer Player',
-     '=================',
-     ". 1 2 3 4",
+      '=================',
+    'Computer Player',
+    '=================',
+    '. 1 2 3 4',
     "A #{@board["A1"][1]} #{@board["A2"][1]} #{@board["A3"][1]} #{@board["A4"][1]}",
 
     "B #{@board["B1"][1]} #{@board["B2"][1]} #{@board["B3"][1]} #{@board["B4"][1]}",
@@ -57,16 +57,16 @@ class ComputerPlayer
 
     "D #{@board["D1"][1]} #{@board["D2"][1]} #{@board["D3"][1]} #{@board["D4"][1]}",
     '================='
-  ]
-  board.join("\n")
+    ]
+    board.join("\n")
   end
 
   def take_fire(missile)
     if @board[missile][0] == true
       @board[missile][0] = false
-      @board[missile][1] = "H"
+      @board[missile][1] = 'H'
     else
-      @board[missile][1] = "M"
+      @board[missile][1] = 'M'
     end
   end
 
